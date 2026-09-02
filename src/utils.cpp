@@ -2,6 +2,17 @@
 
 #include <iostream>
 #include <string>
+#include <limits>
+
+bool isError( double number1, double number2)
+{
+    if ( number1 == std::numeric_limits<double>::max() || number2 == std::numeric_limits<double>::max() )
+    {
+        return true;
+    }
+
+    return false;
+}
 
 bool isDouble( const std::string& string )
 {

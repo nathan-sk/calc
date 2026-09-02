@@ -7,22 +7,21 @@
 #include <iostream>
 #include <string>
 #include <cassert>
-#include <limits>
 
 struct Version
 {
-    std::string name{};
-    float number {};
-    std::string versionName {};
-    std::string date {};
-    std::string gccVersion {};
-    std::string system {};
+    std::string name{"Calc"};
+    std::string number{"1.0"};
+    std::string versionName{"beta"};
+    std::string date{"Aug 31 2026"};
+    std::string gccVersion{"14.2.0"};
+    std::string system{"linux"};
 };
 
 void welcome()
 {
     //création d'une structure pour gérer les versions
-    Version calcVersion{ "Calc", 1.0, "beta", "Aug 31 2026", "14.2.0", "linux" };
+    const Version calcVersion;
     std::cout << calcVersion.name << ' '
               << calcVersion.number << " ("
               << calcVersion.versionName << ", "
@@ -35,7 +34,6 @@ void welcome()
 int main()
 {
     std::string input {};
-    double result {};
 
     welcome();
 
@@ -61,22 +59,22 @@ int main()
         std::cout << "\033[95m>>> \033[0m";
         getline(std::cin, input);
 
+        const double result = calc::doCalcul(input);
+        const auto cmd = doCommand(input);
+
         //teste si l'entrée est une commande
-        if ( doCommand(input) == command )
+        if ( cmd == command )
         {
             continue;
         }
-        else if ( doCommand(input) == quit )
+        else if ( cmd == quit )
         {
-            return 0;
-        }
-        else
-        {
-            result = calc::doCalcul(input);
+            break;
         }
 
-        //test si le résult correspond à une erreure
-        if ( result == std::numeric_limits<double>::max() )
+
+        //test si le résultat correspond à une erreure
+        if (isError(result))
         {
             printError("incorrect entry");
         }

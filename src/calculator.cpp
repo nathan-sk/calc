@@ -6,6 +6,15 @@
 
 namespace calc
 {
+    struct Calcul
+    {
+        char symbol {};
+        double resultLeft {};
+        double resultRight {};
+        std::string calculLeft {};
+        std::string calculRight {};
+    };
+
     double doOperation( double number1, double number2, char symbol )
     {
         double result {};
@@ -33,32 +42,28 @@ namespace calc
 
     double doCalcul( const std::string& calcul )
     {
-        std::string calculLeft {};
-        std::string calculRight {};
-        double resultLeft {};
-        double resultRight {};
-        double result {};
-
         //cherche et réalise les additions et les soustractions en itérant depuis la fin
         for ( int i = std::size(calcul) - 1; i >= 0; --i )
         {
             if ( calcul[i] == '+' || calcul[i] == '-' )
             {
-                calculLeft = { std::begin(calcul), std::begin(calcul) + i };
-                resultLeft = doCalcul(calculLeft);
+                Calcul calculStruct;
 
-                calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
-                resultRight = doCalcul(calculRight);
+                //définission du symbole
+                calculStruct.symbol = calcul[i];
+
+                //définission du calcul de gauche
+                calculStruct.calculLeft = { std::begin(calcul), std::begin(calcul) + i };
+                calculStruct.resultLeft = doCalcul(calculStruct.calculLeft);
+
+                //définission du calcul de droite
+                calculStruct.calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
+                calculStruct.resultRight = doCalcul(calculStruct.calculRight);
 
                 //vérifie si le résultat correspond à une erreure
-                if ( resultLeft == std::numeric_limits<double>::max() || resultRight == std::numeric_limits<double>::max() )
-                {
-                    return result = std::numeric_limits<double>::max();
-                }
+                if (isError(calculStruct.resultLeft, calculStruct.resultRight)) { return std::numeric_limits<double>::max(); }
 
-                result = doOperation( resultLeft, resultRight, calcul[i] );
-
-                return result;
+                return  doOperation( calculStruct.resultLeft, calculStruct.resultRight, calculStruct.symbol );
             }
         }
 
@@ -67,36 +72,35 @@ namespace calc
         {
             if ( calcul[i] == '*' || calcul[i] == '/' )
             {
-                calculLeft = { std::begin(calcul), std::begin(calcul) + i };
-                resultLeft = doCalcul(calculLeft);
+                Calcul calculStruct;
 
-                calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
-                resultRight = doCalcul(calculRight);
+                //définission du symbole
+                calculStruct.symbol = calcul[i];
+
+                //définission du calcul de gauche
+                calculStruct.calculLeft = { std::begin(calcul), std::begin(calcul) + i };
+                calculStruct.resultLeft = doCalcul(calculStruct.calculLeft);
+
+                //définission du calcul de droite
+                calculStruct.calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
+                calculStruct.resultRight = doCalcul(calculStruct.calculRight);
 
                 //vérifie si le résultat correspond à une erreure
-                if ( resultLeft == std::numeric_limits<double>::max() || resultRight == std::numeric_limits<double>::max() )
-                {
-                    return result = std::numeric_limits<double>::max();
-                }
+                if (isError(calculStruct.resultLeft, calculStruct.resultRight)) { return std::numeric_limits<double>::max(); }
 
-                result = doOperation( resultLeft, resultRight, calcul[i] );
-
-                return result;
-            }
-            else
-            {
-                if ( isDouble(calcul) )
-                {
-                    result = stod(calcul);
-                }
-                else
-                {
-                    //affecte la valeur d'erreur à result
-                    result = std::numeric_limits<double>::max();
-                }
+                return  doOperation( calculStruct.resultLeft, calculStruct.resultRight, calculStruct.symbol );
             }
         }
 
-        return result;
+        if ( isDouble(calcul) )
+        {
+            //retourne le calcul convertit en nombre
+            return stod(calcul);
+        }
+        else
+        {
+            //affecte la valeur d'erreur à result
+            return std::numeric_limits<double>::max();
+        }
     }
 }
