@@ -16,7 +16,7 @@ Enter the `src/` directory:
 
 compile the program by running the following command:
 
-`g++ main.cpp commands.cpp calculator.cpp utils.cpp -o calc`
+`g++ -O2 main.cpp commands.cpp calculator.cpp utils.cpp -o calc`
 
 and move the file to the \bin directory:
 

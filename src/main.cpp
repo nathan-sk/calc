@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <cassert>
+#include <optional>
 
 struct Version
 {
@@ -60,7 +61,7 @@ int main()
         std::cout << "\033[95m>>> \033[0m";
         getline(std::cin, input);
 
-        const double result = calc::doCalcul(input);
+        const std::optional<double> result = calc::doCalcul(input);
         const auto cmd = doCommand(input);
 
         //teste si l'entrée est une commande
@@ -75,13 +76,13 @@ int main()
 
 
         //test si le résultat correspond à une erreure
-        if (isError(result))
+        if (!result)
         {
             printError("incorrect entry");
         }
         else
         {
-            std::cout << result << '\n';
+            std::cout << *result << '\n';
         }
     }
 
