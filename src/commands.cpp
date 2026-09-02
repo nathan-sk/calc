@@ -19,7 +19,7 @@ Command doCommand( std::string_view input )
                   << "- use `exit` or `quit` to quit the calculatrice\n"
                   << "\nOptions of the calculator:\n"
                   << "- Basic operations and priorities work\n"
-                  << "- Parenteses also work\n";
+                  << "- Parenteses and functions also work\n";
         return command;
     }
     else if ( input == "clear" )

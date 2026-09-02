@@ -2,6 +2,7 @@
 #include "utils.h"
 
 #include <string>
+#include <cmath>
 #include <limits>
 
 namespace calc
@@ -27,6 +28,8 @@ namespace calc
                 return operationStruct.resultLeft * operationStruct.resultRight;
             case '/':
                 return operationStruct.resultLeft / operationStruct.resultRight;
+            case '^':
+                return pow( operationStruct.resultLeft, operationStruct.resultRight );
         }
 
         return 0;
@@ -34,6 +37,11 @@ namespace calc
 
     double doCalcul( const std::string& calcul )
     {
+        if (calcul == "pi()")
+        {
+            return 3.1415;
+        }
+
         //cherche et réalise les additions et les soustractions en itérant depuis la fin
         for ( int i = std::size(calcul) - 1; i >= 0; --i )
         {
@@ -63,6 +71,30 @@ namespace calc
         for ( int i = std::size(calcul) - 1; i >= 0; --i )
         {
             if ( calcul[i] == '*' || calcul[i] == '/' )
+            {
+                Calcul calculStruct;
+
+                //définition du symbole
+                calculStruct.symbol = calcul[i];
+
+                //définition du calcul de gauche
+                calculStruct.calculLeft = { std::begin(calcul), std::begin(calcul) + i };
+                calculStruct.resultLeft = doCalcul(calculStruct.calculLeft);
+
+                //définition du calcul de droite
+                calculStruct.calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
+                calculStruct.resultRight = doCalcul(calculStruct.calculRight);
+
+                //vérifie si le résultat correspond à une erreure
+                if (isError(calculStruct.resultLeft, calculStruct.resultRight)) { return std::numeric_limits<double>::max(); }
+
+                return  doOperation( calculStruct );
+            }
+        }
+
+        for ( int i = std::size(calcul) - 1; i >= 0; --i )
+        {
+            if ( calcul[i] == '^' )
             {
                 Calcul calculStruct;
 

@@ -2,7 +2,7 @@
 
 ![Calc](https://github.com/nathan-sk/calc/blob/main/screenshot.png)
 
-A simple calculator program for the terminal,   written in C++.
+A simple calculator program for the terminal, written in C++.
 
 It does not currently support parentheses and functions.
 

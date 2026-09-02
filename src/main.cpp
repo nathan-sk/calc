@@ -43,6 +43,7 @@ int main()
     assert( calc::doCalcul( "2+2" ) == 4 );
     assert( calc::doCalcul( "2-2" ) == 0 );
     assert( calc::doCalcul( "2/2" ) == 1 );
+    assert( calc::doCalcul( "2^3" ) == 8 );
     assert( calc::doCalcul( "2*2/2" ) == 2 );
     assert( calc::doCalcul( "2+2-2" ) == 2 );
     assert( calc::doCalcul( "2*2+2" ) == 6 );
