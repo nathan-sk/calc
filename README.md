@@ -1,9 +1,8 @@
 # Calc
-A simple calculator program for the terminal, written in C++.
 
-## Introduction
+![Calc](https://github.com/nathan-sk/calc/blob/main/screenshot.png)
 
-Calc est une application de calculatrice rudimentaire dans le terminal.
+A simple calculator program for the terminal,   written in C++.
 
 Elle ne prend actuellement pas en charge les parenthèses et les fonctions.
 
