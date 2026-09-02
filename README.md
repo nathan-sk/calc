@@ -4,14 +4,20 @@
 
 A simple calculator program for the terminal,   written in C++.
 
-Elle ne prend actuellement pas en charge les parenthèses et les fonctions.
+It does not currently support parentheses and functions.
 
 ## Installation
 
-Compiler le programme en exécutant la commande suivante:
+Run the `install.sh` file or compile the project yourself:
 
-`g++ -O2 main.cpp -o calc`
+Enter the `src/` directory:
 
-et déplacer le fichier dans le répertoire \bin:
+`cd src/`
+
+compile the program by running the following command:
+
+`g++ main.cpp commands.cpp calculator.cpp utils.cpp -o calc`
+
+and move the file to the \bin directory:
 
 `sudo mv calc /bin`
