@@ -15,29 +15,21 @@ namespace calc
         std::string calculRight {};
     };
 
-    double doOperation( double number1, double number2, char symbol )
+    double doOperation( Calcul operationStruct )
     {
-        double result {};
-
-        switch (symbol)
+        switch (operationStruct.symbol)
         {
             case '+':
-                result = number1 + number2;
-                break;
+                return operationStruct.resultLeft + operationStruct.resultRight;
             case '-':
-                result = number1 - number2;
-                break;
+                return operationStruct.resultLeft - operationStruct.resultRight;
             case '*':
-                result = number1 * number2;
-                break;
+                return operationStruct.resultLeft * operationStruct.resultRight;
             case '/':
-            {
-                result = number1 / number2;
-                break;
-            }
+                return operationStruct.resultLeft / operationStruct.resultRight;
         }
 
-        return result;
+        return 0;
     }
 
     double doCalcul( const std::string& calcul )
@@ -49,21 +41,21 @@ namespace calc
             {
                 Calcul calculStruct;
 
-                //définission du symbole
+                //définition du symbole
                 calculStruct.symbol = calcul[i];
 
-                //définission du calcul de gauche
+                //définition du calcul de gauche
                 calculStruct.calculLeft = { std::begin(calcul), std::begin(calcul) + i };
                 calculStruct.resultLeft = doCalcul(calculStruct.calculLeft);
 
-                //définission du calcul de droite
+                //définition du calcul de droite
                 calculStruct.calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
                 calculStruct.resultRight = doCalcul(calculStruct.calculRight);
 
                 //vérifie si le résultat correspond à une erreure
                 if (isError(calculStruct.resultLeft, calculStruct.resultRight)) { return std::numeric_limits<double>::max(); }
 
-                return  doOperation( calculStruct.resultLeft, calculStruct.resultRight, calculStruct.symbol );
+                return  doOperation( calculStruct );
             }
         }
 
@@ -74,21 +66,21 @@ namespace calc
             {
                 Calcul calculStruct;
 
-                //définission du symbole
+                //définition du symbole
                 calculStruct.symbol = calcul[i];
 
-                //définission du calcul de gauche
+                //définition du calcul de gauche
                 calculStruct.calculLeft = { std::begin(calcul), std::begin(calcul) + i };
                 calculStruct.resultLeft = doCalcul(calculStruct.calculLeft);
 
-                //définission du calcul de droite
+                //définition du calcul de droite
                 calculStruct.calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
                 calculStruct.resultRight = doCalcul(calculStruct.calculRight);
 
                 //vérifie si le résultat correspond à une erreure
                 if (isError(calculStruct.resultLeft, calculStruct.resultRight)) { return std::numeric_limits<double>::max(); }
 
-                return  doOperation( calculStruct.resultLeft, calculStruct.resultRight, calculStruct.symbol );
+                return  doOperation( calculStruct );
             }
         }
 
