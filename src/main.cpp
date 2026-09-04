@@ -45,6 +45,7 @@ int main()
     assert( calc::doCalcul( "2-2" ) == 0 );
     assert( calc::doCalcul( "2/2" ) == 1 );
     assert( calc::doCalcul( "2^3" ) == 8 );
+    assert( calc::doCalcul( "2%2" ) == 0 );
     assert( calc::doCalcul( "2*2/2" ) == 2 );
     assert( calc::doCalcul( "2+2-2" ) == 2 );
     assert( calc::doCalcul( "2*2+2" ) == 6 );
@@ -61,7 +62,6 @@ int main()
         std::cout << "\033[95m>>> \033[0m";
         getline(std::cin, input);
 
-        const std::optional<double> result = calc::doCalcul(input);
         const auto cmd = doCommand(input);
 
         //teste si l'entrée est une commande
@@ -74,6 +74,7 @@ int main()
             break;
         }
 
+        const std::optional<double> result = calc::doCalcul(input);
 
         //test si le résultat correspond à une erreure
         if (!result)

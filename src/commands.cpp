@@ -1,5 +1,8 @@
+#include "calculator.h"
+
 #include <iostream>
 #include <string_view>
+#include <cassert>
 
 enum Command
 {
@@ -30,6 +33,26 @@ Command doCommand( std::string_view input )
     else if ( input == "quit" || input == "exit" )
     {
         return quit;
+    }
+    else if ( input == "debug" )
+    {
+        assert( calc::doCalcul( "2*2" ) == 4 );
+        assert( calc::doCalcul( "2+2" ) == 4 );
+        assert( calc::doCalcul( "2-2" ) == 0 );
+        assert( calc::doCalcul( "2/2" ) == 1 );
+        assert( calc::doCalcul( "2^3" ) == 8 );
+        assert( calc::doCalcul( "2%2" ) == 0 );
+        assert( calc::doCalcul( "2*2/2" ) == 2 );
+        assert( calc::doCalcul( "2+2-2" ) == 2 );
+        assert( calc::doCalcul( "2*2+2" ) == 6 );
+        assert( calc::doCalcul( "2+2*2" ) == 6 );
+        assert( calc::doCalcul( "2/2-2" ) == -1 );
+        assert( calc::doCalcul( "2-2/2" ) == 1 );
+        assert( calc::doCalcul( "2*2/2*2" ) == 4 );
+        assert( calc::doCalcul( "2+2-2+2" ) == 4 );
+
+        std::cout << "Calc works good!!!\n";
+        return command;
     }
     else
     {

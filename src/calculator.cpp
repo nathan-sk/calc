@@ -16,7 +16,7 @@ namespace calc
         std::string calculRight {};
     };
 
-    double doOperation( Calcul operationStruct )
+    std::optional<double> doOperation( Calcul operationStruct )
     {
         switch (operationStruct.symbol)
         {
@@ -27,7 +27,18 @@ namespace calc
             case '*':
                 return *operationStruct.resultLeft * *operationStruct.resultRight;
             case '/':
-                return *operationStruct.resultLeft / *operationStruct.resultRight;
+                {
+                    if ( *operationStruct.resultRight == 0 )
+                    {
+                        return std::nullopt;
+                    }
+                    else
+                    {
+                        return *operationStruct.resultLeft / *operationStruct.resultRight;
+                    }
+                }
+            case '%':
+                return std::fmod(*operationStruct.resultLeft, *operationStruct.resultRight);
             case '^':
                 return pow( *operationStruct.resultLeft, *operationStruct.resultRight );
         }
@@ -39,7 +50,7 @@ namespace calc
     {
         if (calcul == "pi()")
         {
-            return 3.1415;
+            return M_PI;
         }
 
         for(int x{0}; x < 3; ++x)
@@ -47,14 +58,15 @@ namespace calc
             //cherche et réalise les additions et les soustractions en itérant depuis la fin
             for ( int i = std::size(calcul) - 1; i >= 0; --i )
             {
-                char symbol1{};
-                char symbol2{};
+                std::optional<char> symbol1{};
+                std::optional<char> symbol2{};
+                std::optional<char> symbol3{};
 
-                if (x == 0) { symbol1 = '+'; symbol2 = '-'; }
-                if (x == 1) { symbol1 = '*'; symbol2 = '/'; }
-                if (x == 2) { symbol1 = '^'; symbol2 = '^'; }
+                if (x == 0) { symbol1 = '+'; symbol2 = '-'; symbol3 = std::nullopt; }
+                if (x == 1) { symbol1 = '*'; symbol2 = '/'; symbol3 = '%'; }
+                if (x == 2) { symbol1 = '^'; symbol2 = std::nullopt; symbol3 = std::nullopt; }
 
-                if ( (calcul[i] == symbol1  || calcul[i] == symbol2) && (i != 0) && (isdigit(calcul[i-1])) )
+                if ( (calcul[i] == symbol1  || calcul[i] == symbol2 || calcul[i] == symbol3 ) && (i != 0) && (isdigit(calcul[i-1])) )
                 {
                     Calcul calculStruct;
 
@@ -88,4 +100,25 @@ namespace calc
             return std::nullopt;
         }
     }
+
+    /*doParentheses( std::string calcul )
+    {
+        while ( calcul.find("("))
+        {
+            int debutParentheses {};
+            int finParentheses {};
+
+            for ( int i = 0; i < std::size(calcul); ++i )
+            {
+                if ( calcul[i] == '(' )
+                {
+                    debutParentheses = i;
+                }
+                if ( calcul[i] == ')' )
+                {
+                    finParentheses = i;
+                }
+            }
+        }
+    }*/
 }
