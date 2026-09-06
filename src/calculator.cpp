@@ -101,24 +101,39 @@ namespace calc
         }
     }
 
-    /*doParentheses( std::string calcul )
+    std::string doParentheses( std::string calcul )
     {
         while ( calcul.find("("))
         {
-            int debutParentheses {};
-            int finParentheses {};
+            int parentheseCount {};
+            std::string::iterator parenthesesBegin {};
+            std::string::iterator parenthesesEnd {};
 
-            for ( int i = 0; i < std::size(calcul); ++i )
+            for ( auto it = std::begin(calcul); it != std::end(calcul); ++it )
             {
-                if ( calcul[i] == '(' )
+                if ( *it == '(' )
                 {
-                    debutParentheses = i;
+                    if ( parentheseCount == 0 )
+                    {
+                        parenthesesBegin = it;
+                    }
+
+                    ++parentheseCount;
                 }
-                if ( calcul[i] == ')' )
+                if ( *it == ')' )
                 {
-                    finParentheses = i;
+                    --parentheseCount;
+
+                    if ( parentheseCount == 0 )
+                    {
+                        parenthesesEnd = it;
+
+                        std::string parenthesesResult {};
+
+                         doParentheses(std::string(parenthesesBegin, parenthesesEnd));
+                    }
                 }
             }
         }
-    }*/
+    }
 }
