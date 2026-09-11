@@ -8,7 +8,7 @@ namespace calc
 {
 	double doOperation( double number1, double number2, char symbol );
 	std::optional<double> doCalcul( const std::string& calcul );
-	std::string doParentheses( std::string calcul );
+	std::optional<double> doParentheses( std::string calcul );
 }
 
 #endif

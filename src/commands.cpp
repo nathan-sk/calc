@@ -51,7 +51,7 @@ Command doCommand( std::string_view input )
         assert( calc::doCalcul( "2*2/2*2" ) == 4 );
         assert( calc::doCalcul( "2+2-2+2" ) == 4 );
 
-        std::cout << "Calc works good!!!\n";
+        std::cout << "Calc works fine!!!\n";
         return command;
     }
     else

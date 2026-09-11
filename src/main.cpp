@@ -34,8 +34,6 @@ void welcome()
 
 int main()
 {
-    std::string input {};
-
     welcome();
 
     //tests pour les calculs
@@ -60,6 +58,9 @@ int main()
     {
         //affiche le prompt
         std::cout << "\033[95m>>> \033[0m";
+
+        std::string input {};
+
         getline(std::cin, input);
 
         const auto cmd = doCommand(input);
@@ -74,7 +75,7 @@ int main()
             break;
         }
 
-        const std::optional<double> result = calc::doCalcul(input);
+        std::optional<double> result = calc::doParentheses(input);
 
         //test si le résultat correspond à une erreure
         if (!result)
