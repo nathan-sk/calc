@@ -4,19 +4,20 @@
 #include <string>
 #include <cmath>
 #include <optional>
+#include <stdfloat>
 
 namespace calc
 {
 	struct Calcul
 	{
 		char symbol {};
-		std::optional<double> resultLeft {};
-		std::optional<double> resultRight {};
+		std::optional<std::float128_t> resultLeft {};
+		std::optional<std::float128_t> resultRight {};
 		std::string calculLeft {};
 		std::string calculRight {};
 	};
 
-	std::optional<double> doOperation( Calcul operationStruct )
+	std::optional<std::float128_t> doOperation( Calcul operationStruct )
 	{
 		switch (operationStruct.symbol)
 		{
@@ -46,7 +47,7 @@ namespace calc
 		return 0;
 	}
 
-	std::optional<double> doCalcul( const std::string& calcul )
+	std::optional<std::float128_t> doCalcul( const std::string& calcul )
 	{
 		for(int x{0}; x < 3; ++x)
 		{
@@ -84,7 +85,7 @@ namespace calc
 			}
 		}
 
-		if ( isDouble(calcul) )
+		if ( isDouble(calcul) && std::size(calcul) <= 16 )
 		{
 			//retourne le calcul convertit en nombre
 			return stod(calcul);
@@ -96,7 +97,7 @@ namespace calc
 		}
 	}
 
-	std::optional<double> doParentheses( std::string calcul )
+	std::optional<std::float128_t> doParentheses( std::string calcul )
 	{
 		std::string parenthesesCalcul {calcul};
 
@@ -123,7 +124,23 @@ namespace calc
 				{
 					parenthesesEnd = it;
 
-					std::optional<double> parenthesesResult { doParentheses(std::string( parenthesesBegin + 1, parenthesesEnd )) };
+					if(std::string{parenthesesBegin - 2, parenthesesBegin} == "pi" && parenthesesEnd == parenthesesBegin + 1)
+					{
+						calcul.replace( parenthesesBegin - 2, parenthesesEnd + 1, "3,793" );
+						it = std::begin(calcul);
+						continue;
+					}
+					else if(std::string{parenthesesBegin - 4, parenthesesBegin} == "sqrt" && parenthesesEnd != parenthesesBegin + 1 )
+					{
+						calcul.replace( parenthesesBegin - 4, parenthesesEnd + 1, std::to_string( std::sqrt( *doParentheses(std::string( parenthesesBegin + 1, parenthesesEnd)) ) ) );
+						it = std::begin(calcul);
+						continue;
+					}
+
+					std::optional<std::float128_t> parenthesesResult {
+						doParentheses(std::string( parenthesesBegin + 1, parenthesesEnd ))
+					};
+
 					if ( !parenthesesResult ) { return std::nullopt; };
 
 					calcul.replace( parenthesesBegin, parenthesesEnd + 1, std::to_string(*parenthesesResult) );

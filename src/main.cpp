@@ -8,85 +8,88 @@
 #include <string>
 #include <cassert>
 #include <optional>
+#include <stdfloat>
+#include <limits>
+#include <iomanip>
 
 struct Version
 {
-    std::string name{"Calc"};
-    std::string number{"1.0"};
-    std::string versionName{"beta"};
-    std::string date{"Aug 31 2026"};
-    std::string gccVersion{"14.2.0"};
-    std::string system{"linux"};
+	std::string name{"Calc"};
+	std::string number{"1.0"};
+	std::string versionName{"beta"};
+	std::string date{"Aug 31 2026"};
+	std::string gccVersion{"14.2.0"};
+	std::string system{"linux"};
 };
 
 void welcome()
 {
-    //création d'une structure pour gérer les versions
-    const Version calcVersion;
-    std::cout << calcVersion.name << ' '
-              << calcVersion.number << " ("
-              << calcVersion.versionName << ", "
-              << calcVersion.date << ") [GCC "
-              << calcVersion.gccVersion << "] on "
-              << calcVersion.system << '\n'
-              << "Type \"help\" for more information.\n";
+	//création d'une structure pour gérer les versions
+	const Version calcVersion;
+	std::cout << calcVersion.name << ' '
+			<< calcVersion.number << " ("
+			<< calcVersion.versionName << ", "
+			<< calcVersion.date << ") [GCC "
+			<< calcVersion.gccVersion << "] on "
+			<< calcVersion.system << '\n'
+			<< "Type \"help\" for more information.\n";
 }
 
 int main()
 {
-    welcome();
+	welcome();
 
-    //tests pour les calculs
-    #ifdef DEBUG
-    assert( calc::doCalcul( "2*2" ) == 4 );
-    assert( calc::doCalcul( "2+2" ) == 4 );
-    assert( calc::doCalcul( "2-2" ) == 0 );
-    assert( calc::doCalcul( "2/2" ) == 1 );
-    assert( calc::doCalcul( "2^3" ) == 8 );
-    assert( calc::doCalcul( "2%2" ) == 0 );
-    assert( calc::doCalcul( "2*2/2" ) == 2 );
-    assert( calc::doCalcul( "2+2-2" ) == 2 );
-    assert( calc::doCalcul( "2*2+2" ) == 6 );
-    assert( calc::doCalcul( "2+2*2" ) == 6 );
-    assert( calc::doCalcul( "2/2-2" ) == -1 );
-    assert( calc::doCalcul( "2-2/2" ) == 1 );
-    assert( calc::doCalcul( "2*2/2*2" ) == 4 );
-    assert( calc::doCalcul( "2+2-2+2" ) == 4 );
-    #endif
+	//tests pour les calculs
+	#ifdef DEBUG
+	assert( calc::doCalcul( "2*2" ) == 4 );
+	assert( calc::doCalcul( "2+2" ) == 4 );
+	assert( calc::doCalcul( "2-2" ) == 0 );
+	assert( calc::doCalcul( "2/2" ) == 1 );
+	assert( calc::doCalcul( "2^3" ) == 8 );
+	assert( calc::doCalcul( "2%2" ) == 0 );
+	assert( calc::doCalcul( "2*2/2" ) == 2 );
+	assert( calc::doCalcul( "2+2-2" ) == 2 );
+	assert( calc::doCalcul( "2*2+2" ) == 6 );
+	assert( calc::doCalcul( "2+2*2" ) == 6 );
+	assert( calc::doCalcul( "2/2-2" ) == -1 );
+	assert( calc::doCalcul( "2-2/2" ) == 1 );
+	assert( calc::doCalcul( "2*2/2*2" ) == 4 );
+	assert( calc::doCalcul( "2+2-2+2" ) == 4 );
+	#endif
 
-    while(true)
-    {
-        //affiche le prompt
-        std::cout << "\033[95m>>> \033[0m";
+	while(true)
+	{
+		//affiche le prompt
+		std::cout << "\033[95m>>> \033[0m";
 
-        std::string input {};
+		std::string input {};
 
-        getline(std::cin, input);
+		getline(std::cin, input);
 
-        const auto cmd = doCommand(input);
+		const auto cmd = doCommand(input);
 
-        //teste si l'entrée est une commande
-        if ( cmd == command )
-        {
-            continue;
-        }
-        else if ( cmd == quit )
-        {
-            break;
-        }
+		//teste si l'entrée est une commande
+		if ( cmd == command )
+		{
+			continue;
+		}
+		else if ( cmd == quit )
+		{
+			break;
+		}
 
-        std::optional<double> result = calc::doParentheses(input);
+		std::optional<std::float128_t> result = calc::doParentheses(input);
 
-        //test si le résultat correspond à une erreure
-        if (!result)
-        {
-            printError("incorrect entry");
-        }
-        else
-        {
-            std::cout << *result << '\n';
-        }
-    }
+		//test si le résultat correspond à une erreure
+		if (!result)
+		{
+			printError("incorrect entry");
+		}
+		else
+		{
+			std::cout << std::setprecision(std::numeric_limits<long double>::digits10) << *result << '\n';
+		}
+	}
 
-    return 0;
+	return 0;
 }
