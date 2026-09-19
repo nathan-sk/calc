@@ -4,20 +4,15 @@
 #include <string>
 #include <cmath>
 #include <optional>
-#include <stdfloat>
+
+/*
+ Tout le code utilise long double au lieu de double.
+ Cela peut ête utile ou inutile en fonction des configurations.
+*/
 
 namespace calc
 {
-	struct Calcul
-	{
-		char symbol {};
-		std::optional<std::float128_t> resultLeft {};
-		std::optional<std::float128_t> resultRight {};
-		std::string calculLeft {};
-		std::string calculRight {};
-	};
-
-	std::optional<std::float128_t> doOperation( Calcul operationStruct )
+	std::optional<long double> doOperation( Calcul operationStruct )
 	{
 		switch (operationStruct.symbol)
 		{
@@ -47,7 +42,7 @@ namespace calc
 		return 0;
 	}
 
-	std::optional<std::float128_t> doCalcul( const std::string& calcul )
+	std::optional<long double> doCalcul( const std::string& calcul )
 	{
 		for(int x{0}; x < 3; ++x)
 		{
@@ -85,7 +80,7 @@ namespace calc
 			}
 		}
 
-		if ( isDouble(calcul) && std::size(calcul) <= 16 )
+		if ( isDouble(calcul) )
 		{
 			//retourne le calcul convertit en nombre
 			return stod(calcul);
@@ -97,7 +92,7 @@ namespace calc
 		}
 	}
 
-	std::optional<std::float128_t> doParentheses( std::string calcul )
+	std::optional<long double> sortCalcul( std::string calcul )
 	{
 		std::string parenthesesCalcul {calcul};
 
@@ -108,48 +103,55 @@ namespace calc
 		for ( auto it = std::begin(calcul); it != std::end(calcul); ++it )
 		{
 			if ( *it == '(' )
-			{
+			{	
+				//vérifie si ce n'est pas une parenthèse imbriquée
 				if ( parenthesesCount == 0 )
 				{
+					//affecte la valeur de l'itérateur it à parenthesesBegin
 					parenthesesBegin = it;
 				}
 
 				++parenthesesCount;
 			}
-			if ( *it == ')' )
+			else if ( *it == ')' )
 			{
 				--parenthesesCount;
-
+				
+				//vérfie si la parenthèse est terminée
 				if ( parenthesesCount == 0 )
 				{
+					//affecte la valeur de l'itérateur it à parenthesesEnd
 					parenthesesEnd = it;
 
 					if(std::string{parenthesesBegin - 2, parenthesesBegin} == "pi" && parenthesesEnd == parenthesesBegin + 1)
 					{
-						calcul.replace( parenthesesBegin - 2, parenthesesEnd + 1, "3,793" );
+						calcul.replace( parenthesesBegin - 2, parenthesesEnd + 1, std::to_string(M_PI) );
 						it = std::begin(calcul);
 						continue;
 					}
 					else if(std::string{parenthesesBegin - 4, parenthesesBegin} == "sqrt" && parenthesesEnd != parenthesesBegin + 1 )
 					{
-						calcul.replace( parenthesesBegin - 4, parenthesesEnd + 1, std::to_string( std::sqrt( *doParentheses(std::string( parenthesesBegin + 1, parenthesesEnd)) ) ) );
+						calcul.replace( parenthesesBegin - 4, parenthesesEnd + 1, std::to_string( std::sqrt( *sortCalcul(std::string( parenthesesBegin + 1, parenthesesEnd)) ) ) );
 						it = std::begin(calcul);
 						continue;
 					}
 
-					std::optional<std::float128_t> parenthesesResult {
-						doParentheses(std::string( parenthesesBegin + 1, parenthesesEnd ))
-					};
+					//appelle récusif de la fonction doParentheses jusqu'il n'y ai plus de parenthèses
+					std::optional<long double> parenthesesResult { sortCalcul(std::string( parenthesesBegin + 1, parenthesesEnd )) };
 
+					//vérifie si parenthesesResult renvoit une erreure(venant de doCalcul())
 					if ( !parenthesesResult ) { return std::nullopt; };
 
+					//remplace le texte de parenthesesBegin à parenthesesEnd par le parenthesesResult
 					calcul.replace( parenthesesBegin, parenthesesEnd + 1, std::to_string(*parenthesesResult) );
 
+					//réinitialise la position de it
 					it = std::begin(calcul);
 				}
 			}
 		}
 
+		//si la string ne contient pas de parenthèses, retourne le résultat du calcul
 		return doCalcul(calcul);
 	}
 }

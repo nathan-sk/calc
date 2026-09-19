@@ -1,5 +1,3 @@
-#define DEBUG
-
 #include "calculator.h"
 #include "commands.h"
 #include "utils.h"
@@ -8,9 +6,6 @@
 #include <string>
 #include <cassert>
 #include <optional>
-#include <stdfloat>
-#include <limits>
-#include <iomanip>
 
 struct Version
 {
@@ -41,20 +36,20 @@ int main()
 
 	//tests pour les calculs
 	#ifdef DEBUG
-	assert( calc::doCalcul( "2*2" ) == 4 );
-	assert( calc::doCalcul( "2+2" ) == 4 );
-	assert( calc::doCalcul( "2-2" ) == 0 );
-	assert( calc::doCalcul( "2/2" ) == 1 );
-	assert( calc::doCalcul( "2^3" ) == 8 );
-	assert( calc::doCalcul( "2%2" ) == 0 );
-	assert( calc::doCalcul( "2*2/2" ) == 2 );
-	assert( calc::doCalcul( "2+2-2" ) == 2 );
-	assert( calc::doCalcul( "2*2+2" ) == 6 );
-	assert( calc::doCalcul( "2+2*2" ) == 6 );
-	assert( calc::doCalcul( "2/2-2" ) == -1 );
-	assert( calc::doCalcul( "2-2/2" ) == 1 );
-	assert( calc::doCalcul( "2*2/2*2" ) == 4 );
-	assert( calc::doCalcul( "2+2-2+2" ) == 4 );
+	assert( calc::sortCalcul( "2*2" ) == 4 );
+	assert( calc::sortCalcul( "2+2" ) == 4 );
+	assert( calc::sortCalcul( "2-2" ) == 0 );
+	assert( calc::sortCalcul( "2/2" ) == 1 );
+	assert( calc::sortCalcul( "2^3" ) == 8 );
+	assert( calc::sortCalcul( "2%2" ) == 0 );
+	assert( calc::sortCalcul( "2*2/2" ) == 2 );
+	assert( calc::sortCalcul( "2+2-2" ) == 2 );
+	assert( calc::sortCalcul( "2*2+2" ) == 6 );
+	assert( calc::sortCalcul( "2+2*2" ) == 6 );
+	assert( calc::sortCalcul( "2/2-2" ) == -1 );
+	assert( calc::sortCalcul( "2-2/2" ) == 1 );
+	assert( calc::sortCalcul( "2*2/2*2" ) == 4 );
+	assert( calc::sortCalcul( "2+2-2+2" ) == 4 );
 	#endif
 
 	while(true)
@@ -78,7 +73,7 @@ int main()
 			break;
 		}
 
-		std::optional<std::float128_t> result = calc::doParentheses(input);
+		std::optional<long double> result = calc::sortCalcul(input);
 
 		//test si le résultat correspond à une erreure
 		if (!result)
@@ -87,7 +82,7 @@ int main()
 		}
 		else
 		{
-			std::cout << std::setprecision(std::numeric_limits<long double>::digits10) << *result << '\n';
+			std::cout << *result << '\n';
 		}
 	}
 

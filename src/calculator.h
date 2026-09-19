@@ -1,15 +1,23 @@
 #include <string>
 #include <optional>
-#include <stdfloat>
 
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
 namespace calc
 {
-	std::float128_t doOperation( std::float128_t number1, std::float128_t number2, char symbol );
-	std::optional<std::float128_t> doCalcul( const std::string& calcul );
-	std::optional<std::float128_t> doParentheses( std::string calcul );
+	struct Calcul
+	{
+		char symbol {};
+		std::optional<long double> resultLeft {};
+		std::optional<long double> resultRight {};
+		std::string calculLeft {};
+		std::string calculRight {};
+	};
+
+	std::optional<long double> doOperation( Calcul operationStruct );
+	std::optional<long double> doCalcul( const std::string& calcul );
+	std::optional<long double> sortCalcul( std::string calcul );
 }
 
 #endif
