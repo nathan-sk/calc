@@ -29,7 +29,7 @@ and run the program:
 What works:
 * Addition, subtraction, division, and multiplication operators
 * Modulo operator
-* Operator precedence
+* operator priorities
 * Nested parentheses
 * `pi()` and `sqrt()` functions
 * Exponents (powers)
