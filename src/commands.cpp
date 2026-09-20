@@ -36,20 +36,20 @@ Command doCommand( std::string_view input )
     }
     else if ( input == "debug" )
     {
-        assert( calc::doCalcul( "2*2" ) == 4 );
-        assert( calc::doCalcul( "2+2" ) == 4 );
-        assert( calc::doCalcul( "2-2" ) == 0 );
-        assert( calc::doCalcul( "2/2" ) == 1 );
-        assert( calc::doCalcul( "2^3" ) == 8 );
-        assert( calc::doCalcul( "2%2" ) == 0 );
-        assert( calc::doCalcul( "2*2/2" ) == 2 );
-        assert( calc::doCalcul( "2+2-2" ) == 2 );
-        assert( calc::doCalcul( "2*2+2" ) == 6 );
-        assert( calc::doCalcul( "2+2*2" ) == 6 );
-        assert( calc::doCalcul( "2/2-2" ) == -1 );
-        assert( calc::doCalcul( "2-2/2" ) == 1 );
-        assert( calc::doCalcul( "2*2/2*2" ) == 4 );
-        assert( calc::doCalcul( "2+2-2+2" ) == 4 );
+	assert( calc::inputParser( "2*2" ) == 4 );
+	assert( calc::inputParser( "2+2" ) == 4 );
+	assert( calc::inputParser( "2-2" ) == 0 );
+	assert( calc::inputParser( "2/2" ) == 1 );
+	assert( calc::inputParser( "2^3" ) == 8 );
+	assert( calc::inputParser( "2%2" ) == 0 );
+	assert( calc::inputParser( "2*2/2" ) == 2 );
+	assert( calc::inputParser( "2+2-2" ) == 2 );
+	assert( calc::inputParser( "2*2+2" ) == 6 );
+	assert( calc::inputParser( "2+2*2" ) == 6 );
+	assert( calc::inputParser( "2/2-2" ) == -1 );
+	assert( calc::inputParser( "2-2/2" ) == 1 );
+	assert( calc::inputParser( "2*2/2*2" ) == 4 );
+	assert( calc::inputParser( "2+2-2+2" ) == 4 );
 
         std::cout << "Calc works fine!!!\n";
         return command;

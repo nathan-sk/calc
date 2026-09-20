@@ -36,20 +36,20 @@ int main()
 
 	//tests pour les calculs
 	#ifdef DEBUG
-	assert( calc::sortCalcul( "2*2" ) == 4 );
-	assert( calc::sortCalcul( "2+2" ) == 4 );
-	assert( calc::sortCalcul( "2-2" ) == 0 );
-	assert( calc::sortCalcul( "2/2" ) == 1 );
-	assert( calc::sortCalcul( "2^3" ) == 8 );
-	assert( calc::sortCalcul( "2%2" ) == 0 );
-	assert( calc::sortCalcul( "2*2/2" ) == 2 );
-	assert( calc::sortCalcul( "2+2-2" ) == 2 );
-	assert( calc::sortCalcul( "2*2+2" ) == 6 );
-	assert( calc::sortCalcul( "2+2*2" ) == 6 );
-	assert( calc::sortCalcul( "2/2-2" ) == -1 );
-	assert( calc::sortCalcul( "2-2/2" ) == 1 );
-	assert( calc::sortCalcul( "2*2/2*2" ) == 4 );
-	assert( calc::sortCalcul( "2+2-2+2" ) == 4 );
+	assert( calc::inputParser( "2*2" ) == 4 );
+	assert( calc::inputParser( "2+2" ) == 4 );
+	assert( calc::inputParser( "2-2" ) == 0 );
+	assert( calc::inputParser( "2/2" ) == 1 );
+	assert( calc::inputParser( "2^3" ) == 8 );
+	assert( calc::inputParser( "2%2" ) == 0 );
+	assert( calc::inputParser( "2*2/2" ) == 2 );
+	assert( calc::inputParser( "2+2-2" ) == 2 );
+	assert( calc::inputParser( "2*2+2" ) == 6 );
+	assert( calc::inputParser( "2+2*2" ) == 6 );
+	assert( calc::inputParser( "2/2-2" ) == -1 );
+	assert( calc::inputParser( "2-2/2" ) == 1 );
+	assert( calc::inputParser( "2*2/2*2" ) == 4 );
+	assert( calc::inputParser( "2+2-2+2" ) == 4 );
 	#endif
 
 	while(true)
@@ -73,7 +73,7 @@ int main()
 			break;
 		}
 
-		std::optional<long double> result = calc::sortCalcul(input);
+		std::optional<long double> result = calc::inputParser(input);
 
 		//test si le résultat correspond à une erreure
 		if (!result)

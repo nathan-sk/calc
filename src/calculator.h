@@ -16,8 +16,8 @@ namespace calc
 	};
 
 	std::optional<long double> doOperation( Calcul operationStruct );
-	std::optional<long double> doCalcul( const std::string& calcul );
-	std::optional<long double> sortCalcul( std::string calcul );
+	std::optional<long double> sortOperation( const std::string& calcul );
+	std::optional<long double> inputParser( std::string calcul );
 }
 
 #endif

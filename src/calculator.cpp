@@ -42,7 +42,7 @@ namespace calc
 		return 0;
 	}
 
-	std::optional<long double> doCalcul( const std::string& calcul )
+	std::optional<long double> sortOperation( const std::string& calcul )
 	{
 		for(int x{0}; x < 3; ++x)
 		{
@@ -66,11 +66,11 @@ namespace calc
 
 					//définition du calcul de gauche
 					calculStruct.calculLeft = { std::begin(calcul), std::begin(calcul) + i };
-					calculStruct.resultLeft = doCalcul(calculStruct.calculLeft);
+					calculStruct.resultLeft = sortOperation(calculStruct.calculLeft);
 
 					//définition du calcul de droite
 					calculStruct.calculRight = { std::begin(calcul) + i + 1, std::end(calcul) };
-					calculStruct.resultRight = doCalcul(calculStruct.calculRight);
+					calculStruct.resultRight = sortOperation(calculStruct.calculRight);
 
 					//vérifie si le résultat correspond à une erreure
 					if ( !calculStruct.resultLeft || !calculStruct.resultRight ) { return std::nullopt; }
@@ -92,7 +92,49 @@ namespace calc
 		}
 	}
 
-	std::optional<long double> sortCalcul( std::string calcul )
+	class Function
+	{
+	private:
+		std::string m_name{};
+		std::string m_calcul{};
+
+		std::string m_result{};
+
+	public:
+		bool searchFunction( const std::string& calcul, std::string::iterator parenthesesBegin, std::string::iterator parenthesesEnd )
+		{	
+			if ( std::string{parenthesesBegin - 2, parenthesesBegin} == "pi" && parenthesesEnd == parenthesesBegin + 1 )
+			{
+				m_name = "pi";
+			}
+			else if ( std::string{parenthesesBegin - 4, parenthesesBegin} == "sqrt" )
+			{
+				m_name = "sqrt";
+			}
+			else
+			{
+				return false;
+			}
+
+			m_calcul = std::string{ parenthesesBegin + 1, parenthesesEnd };
+			
+			return true;
+		}
+
+		void doFunction()
+		{
+			if ( m_name == "pi" )
+			{
+				m_result = std::to_string(M_PI);
+			}
+			else if ( m_name == "sqrt" )
+			{
+				m_result = std::to_string( std::sqrt( *inputParser( std::string{ m_calcul } ) ) );
+			}
+		}
+	};
+
+	std::optional<long double> inputParser( std::string calcul )
 	{
 		std::string parenthesesCalcul {calcul};
 
@@ -131,13 +173,13 @@ namespace calc
 					}
 					else if(std::string{parenthesesBegin - 4, parenthesesBegin} == "sqrt" && parenthesesEnd != parenthesesBegin + 1 )
 					{
-						calcul.replace( parenthesesBegin - 4, parenthesesEnd + 1, std::to_string( std::sqrt( *sortCalcul(std::string( parenthesesBegin + 1, parenthesesEnd)) ) ) );
+						calcul.replace( parenthesesBegin - 4, parenthesesEnd + 1, std::to_string( std::sqrt( *inputParser(std::string( parenthesesBegin + 1, parenthesesEnd)) ) ) );
 						it = std::begin(calcul);
 						continue;
 					}
 
 					//appelle récusif de la fonction doParentheses jusqu'il n'y ai plus de parenthèses
-					std::optional<long double> parenthesesResult { sortCalcul(std::string( parenthesesBegin + 1, parenthesesEnd )) };
+					std::optional<long double> parenthesesResult { inputParser(std::string( parenthesesBegin + 1, parenthesesEnd )) };
 
 					//vérifie si parenthesesResult renvoit une erreure(venant de doCalcul())
 					if ( !parenthesesResult ) { return std::nullopt; };
@@ -152,6 +194,6 @@ namespace calc
 		}
 
 		//si la string ne contient pas de parenthèses, retourne le résultat du calcul
-		return doCalcul(calcul);
+		return sortOperation(calcul);
 	}
 }
