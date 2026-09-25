@@ -1,5 +1,6 @@
 #include "calculator.h"
 #include "utils.h"
+#include "functions.h"
 
 #include <string>
 #include <string_view>
@@ -18,7 +19,6 @@ namespace calc
 	private:
 		std::string m_result{};
 
-		char m_symbol {};
 		std::optional<long double> m_resultLeft {};
 		std::optional<long double> m_resultRight {};
 
@@ -26,18 +26,15 @@ namespace calc
 		std::string getResult() const { return m_result; }
 		void setResult( std::string_view result ) { m_result = result; }
 
-		char getSymbol() const { return m_symbol; }
-		void setSymbol( char symbol ) { m_symbol = symbol; }
-
 		std::optional<long double> getResultLeft() const { return m_resultLeft; }
 		void setResultLeft( std::optional<long double> resultLeft ) { m_resultLeft = resultLeft; }
 
 		std::optional<long double> getResultRight() const { return m_resultRight; }
 		void setResultRight( std::optional<long double> resultRight ) { m_resultRight = resultRight; }
 		
-		std::optional<long double> doOperation()
+		std::optional<long double> doOperation(char symbol)
 		{
-			switch (getSymbol())
+			switch (symbol)
 			{
 				case '+':
 					return *getResultLeft() + *getResultRight();
@@ -79,8 +76,6 @@ namespace calc
 
 				if ( (calcul[i] == symbol1  || calcul[i] == symbol2 || calcul[i] == symbol3 ) && (i != 0) && (isdigit(calcul[i-1])) )
 				{
-					//définition du symbole
-					setSymbol(calcul[i]);
 
 					//définition du calcul de gauche
 					setResult( std::string{ std::begin(calcul), std::begin(calcul) + i } );
@@ -93,7 +88,7 @@ namespace calc
 					//vérifie si le résultat correspond à une erreure
 					if ( !getResultLeft() || !getResultRight() ) { return std::nullopt; }
 					
-					return  doOperation();
+					return  doOperation(calcul[i]);
 				}
 			}
 		}
@@ -109,59 +104,6 @@ namespace calc
 			return std::nullopt;
 		}
 	}
-	};
-
-
-	class Function
-	{
-	private:
-		std::string m_name{};
-		std::string m_calcul{};
-
-		std::string m_result{};
-
-	public:
-
-		std::string getName() const { return m_name; }
-		std::string getCalcul() const { return m_calcul; }
-		std::string getResult() const { return m_result; }
-
-		bool searchFunction( const std::string& calcul, std::string::iterator parenthesesBegin, std::string::iterator parenthesesEnd )
-		{	
-			if ( std::string{parenthesesBegin - 2, parenthesesBegin} == "pi" && parenthesesEnd == parenthesesBegin + 1 ) { m_name = "pi"; }
-			else if ( std::string{parenthesesBegin - 4, parenthesesBegin} == "sqrt" )  { m_name = "sqrt"; }
-			else if ( std::string{parenthesesBegin - 3, parenthesesBegin} == "abs" )   { m_name = "abs"; }
-			else if ( std::string{parenthesesBegin - 3, parenthesesBegin} == "sin" )   { m_name = "sin"; }
-			else if ( std::string{parenthesesBegin - 3, parenthesesBegin} == "cos" )   { m_name = "cos"; }
-			else if ( std::string{parenthesesBegin - 3, parenthesesBegin} == "tan" )   { m_name = "tan"; }
-			else if ( std::string{parenthesesBegin - 4, parenthesesBegin} == "asin" )  { m_name = "asin"; }
-			else if ( std::string{parenthesesBegin - 4, parenthesesBegin} == "acos" )  { m_name = "acos"; }
-			else if ( std::string{parenthesesBegin - 4, parenthesesBegin} == "atan" )  { m_name = "atan"; }
-			else if ( std::string{parenthesesBegin - 5, parenthesesBegin} == "floor" ) { m_name = "floor"; }
-			else if ( std::string{parenthesesBegin - 4, parenthesesBegin} == "ceil" )  { m_name = "ceil"; }
-			else if ( std::string{parenthesesBegin - 5, parenthesesBegin} == "round" ) {m_name = "round"; }
-			else { return false; }
-
-			m_calcul = std::string{ parenthesesBegin + 1, parenthesesEnd };
-			
-			return true;
-		}
-
-		void doFunction()
-		{
-			if ( m_name == "pi" ) { m_result = std::to_string(M_PI); }
-			else if ( m_name == "sqrt" )  { m_result = std::to_string( std::sqrt( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "abs" )   { m_result = std::to_string( std::abs( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "sin" )   { m_result = std::to_string( std::sin( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "cos" )   { m_result = std::to_string( std::cos( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "tan" )   { m_result = std::to_string( std::tan( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "asin" )  { m_result = std::to_string( std::asin( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "acos" )  { m_result = std::to_string( std::acos( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "atan" )  { m_result = std::to_string( std::atan( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "floor" ) { m_result = std::to_string( std::floor( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "ceil" )  { m_result = std::to_string( std::ceil( *inputParser( m_calcul ) ) ); }
-			else if ( m_name == "round" ) { m_result = std::to_string( std::round( *inputParser( m_calcul ) ) ); }
-		}
 	};
 
 	std::optional<long double> inputParser( std::string calcul )
@@ -197,14 +139,14 @@ namespace calc
 					//affecte la valeur de l'itérateur it à parenthesesEnd
 					parenthesesEnd = it;
 
-					Function function;
-					if ( function.searchFunction(calcul, parenthesesBegin, parenthesesEnd) )
+					function::Function function;
+					if ( function.find(calcul, parenthesesBegin, parenthesesEnd) )
 					{	
-						function.doFunction();
 						calcul.replace( parenthesesBegin - static_cast<int>(std::size(function.getName())) 
 								, parenthesesEnd + 1,  function.getResult() );
 	
 						it = std::begin(calcul);
+						operation.setResult(calcul);
 						continue;
 					}
 
