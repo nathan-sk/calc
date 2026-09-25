@@ -6,7 +6,7 @@
 
 namespace calc
 {
-	struct Calcul
+	struct Calcul 
 	{
 		char symbol {};
 		std::optional<long double> resultLeft {};
@@ -15,7 +15,6 @@ namespace calc
 		std::string calculRight {};
 	};
 
-	std::optional<long double> doOperation( Calcul operationStruct );
 	std::optional<long double> sortOperation( const std::string& calcul );
 	std::optional<long double> inputParser( std::string calcul );
 }
