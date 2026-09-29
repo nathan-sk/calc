@@ -6,21 +6,21 @@ A simple calculator program for the terminal, written in C++.
 
 ## Installation
 
-### 1.download the binaries 
+### 1. download the binaries 
 
 ![Download releases](https://github.com/nathan-sk/calc/releases/)
 
-### 2.or install it manually
+### 2. or install it manually
 
 Enter the `src/` directory:
 
 `cd src/`
 
-#### 1.run the `install.sh` file
+#### 1. run the `install.sh` file
 
 `chmod u+x install.sh`
 
-#### 2.or compile the project yourself
+#### 2. or compile the project yourself
 
 compile the program by running the following command:
 
@@ -51,7 +51,7 @@ What is missing:
 
 ## To-do
 
-### v1.0.0
+### v1.0
 
 | Feature | Progress |
 | :---- | :---- |
