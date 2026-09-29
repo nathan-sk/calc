@@ -1,15 +1,9 @@
+#include "commands.h"
 #include "calculator.h"
 
 #include <iostream>
 #include <string_view>
 #include <cassert>
-
-enum Command
-{
-    command,
-    notCommand,
-    quit
-};
 
 Command doCommand( std::string_view input )
 {
@@ -21,8 +15,13 @@ Command doCommand( std::string_view input )
                   << "- use `help` to print the help utility\n"
                   << "- use `exit` or `quit` to quit the calculatrice\n"
                   << "\nOptions of the calculator:\n"
-                  << "- Basic operations and priorities work\n"
-                  << "- Parenteses and functions also work\n";
+		  << "- Addition, subtraction, division, and multiplication operators\n"
+		  << "- Modulo operator\n"
+		  << "- operator priorities\n"
+		  << "- Nested parentheses\n"
+		  << "- functions : pi(), sqrt(), abs(), sin(), cos(), tan(), floor(), ceil(), and round()\n"
+		  << "- Exponents (powers)\n";
+
         return command;
     }
     else if ( input == "clear" )
@@ -33,26 +32,6 @@ Command doCommand( std::string_view input )
     else if ( input == "quit" || input == "exit" )
     {
         return quit;
-    }
-    else if ( input == "debug" )
-    {
-	assert( calc::inputParser( "2*2" ) == 4 );
-	assert( calc::inputParser( "2+2" ) == 4 );
-	assert( calc::inputParser( "2-2" ) == 0 );
-	assert( calc::inputParser( "2/2" ) == 1 );
-	assert( calc::inputParser( "2^3" ) == 8 );
-	assert( calc::inputParser( "2%2" ) == 0 );
-	assert( calc::inputParser( "2*2/2" ) == 2 );
-	assert( calc::inputParser( "2+2-2" ) == 2 );
-	assert( calc::inputParser( "2*2+2" ) == 6 );
-	assert( calc::inputParser( "2+2*2" ) == 6 );
-	assert( calc::inputParser( "2/2-2" ) == -1 );
-	assert( calc::inputParser( "2-2/2" ) == 1 );
-	assert( calc::inputParser( "2*2/2*2" ) == 4 );
-	assert( calc::inputParser( "2+2-2+2" ) == 4 );
-
-        std::cout << "Calc works fine!!!\n";
-        return command;
     }
     else
     {

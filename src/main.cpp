@@ -1,3 +1,5 @@
+#define DEBUG
+
 #include "calculator.h"
 #include "commands.h"
 #include "utils.h"
@@ -50,6 +52,10 @@ int main()
 	assert( calc::inputParser( "2-2/2" ) == 1 );
 	assert( calc::inputParser( "2*2/2*2" ) == 4 );
 	assert( calc::inputParser( "2+2-2+2" ) == 4 );
+	assert( calc::inputParser( "sqrt(4)" ) == 2 );
+	assert( !calc::inputParser( "pi(4)" ) );
+	assert( !calc::inputParser( "sqrt()" ) );
+	assert( !calc::inputParser( "error" ) );
 	#endif
 
 	while(true)

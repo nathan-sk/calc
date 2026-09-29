@@ -3,7 +3,7 @@
 cd src/
 
 echo "compilation..."
-g++ -O2 main.cpp commands.cpp calculator.cpp utils.cpp -o calc
+g++ -O2 main.cpp commands.cpp calculator.cpp utils.cpp functions.cpp -o calc
 echo "done!"
 
 echo "Installation..."

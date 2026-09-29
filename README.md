@@ -4,25 +4,40 @@
 
 A simple calculator program for the terminal, written in C++.
 
+---
+
 ## Installation
 
-Run the `install.sh` file or compile the project yourself:
+### download the binaries 
+
+![Download releases](https://github.com/nathan-sk/calc/releases/)
+
+### or install it manually
 
 Enter the `src/` directory:
 
 `cd src/`
 
+#### run the `install.sh` file
+
+`chmod u+x install.sh`
+
+#### or compile the project yourself
+
 compile the program by running the following command:
 
-`g++ -O2 main.cpp commands.cpp calculator.cpp utils.cpp -o calc`
+`g++ -O2 main.cpp commands.cpp calculator.cpp utils.cpp functions.cpp -o calc`
 
 move the file to the \bin directory:
 
 `sudo mv calc /usr/local/bin`
 
+
 and run the program:
 
 `calc`
+
+---
 
 ## Features
 
@@ -31,23 +46,27 @@ What works:
 * Modulo operator
 * operator priorities
 * Nested parentheses
-* `pi()` and `sqrt()` functions
+* functions : pi(), sqrt(), abs(), sin(), cos(), tan(), floor(), ceil(), and round()
 * Exponents (powers)
-* Basic commands: `clear`, `exit` or `quit`, `help`, and `debug`
+* Basic commands: `clear`, `exit` or `quit`, and `help`
 
 What is missing:
 * Numbers larger than `double`
-* A wide range of functions
-* Availability on platforms other than Linux
+
+---
 
 ## To-do
 
+### v1.0.0
+
 | Feature | Progress |
 | :---- | :---- |
-| 1. Adding functions | 20% |
-| 2. Windows availability | 40% |
-| 3. Creating releases | 0% |
-| 4. Using C++ classes | 10% |
+| 1. Adding functions | 100% |
+| 2. Windows availability | 100% |
+| 3. Creating releases | 100% |
+| 4. Using C++ classes | 80% |
+
+---
 
 ## Get involved
 
