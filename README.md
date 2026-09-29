@@ -4,25 +4,23 @@
 
 A simple calculator program for the terminal, written in C++.
 
----
-
 ## Installation
 
-### download the binaries 
+### 1.download the binaries 
 
 ![Download releases](https://github.com/nathan-sk/calc/releases/)
 
-### or install it manually
+### 2.or install it manually
 
 Enter the `src/` directory:
 
 `cd src/`
 
-#### run the `install.sh` file
+#### 1.run the `install.sh` file
 
 `chmod u+x install.sh`
 
-#### or compile the project yourself
+#### 2.or compile the project yourself
 
 compile the program by running the following command:
 
@@ -36,8 +34,6 @@ move the file to the \bin directory:
 and run the program:
 
 `calc`
-
----
 
 ## Features
 
@@ -53,8 +49,6 @@ What works:
 What is missing:
 * Numbers larger than `double`
 
----
-
 ## To-do
 
 ### v1.0.0
@@ -65,8 +59,6 @@ What is missing:
 | 2. Windows availability | 100% |
 | 3. Creating releases | 100% |
 | 4. Using C++ classes | 80% |
-
----
 
 ## Get involved
 
