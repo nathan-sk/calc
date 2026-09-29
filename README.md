@@ -6,13 +6,13 @@ A simple calculator program for the terminal, written in C++.
 
 ## Installation
 
-### 1. download the binaries 
+### 1. download the binaries :
 
 ![Download releases](https://github.com/nathan-sk/calc/releases/)
 
-### 2. or install it manually
+### 2. or install it manually :
 
-Enter the `src/` directory:
+Enter the `src/` directory
 
 `cd src/`
 
