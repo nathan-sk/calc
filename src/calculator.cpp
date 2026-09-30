@@ -24,7 +24,7 @@ std::optional<long double> calc::Operation::doOperation(char symbol)
 			return *getResultLeft() * *getResultRight();
 		case '/':
 			{
-				if ( *getResultLeft() == 0 ) { return std::nullopt; }
+				if ( *getResultRight() == 0 ) { return std::nullopt; }
 
 				else { return *getResultLeft() / *getResultRight(); }
 			}
@@ -134,6 +134,7 @@ std::optional<long double> calc::inputParser( std::string calcul )
 				if ( !parenthesesResult ) { return std::nullopt; };
 
 				calcul.replace( parenthesesBegin, parenthesesEnd + 1, std::to_string(*parenthesesResult) );
+				operation.setResult(calcul);
 
 				it = std::begin(calcul);
 			}

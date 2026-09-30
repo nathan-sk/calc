@@ -52,6 +52,7 @@ int main()
 	assert( calc::inputParser( "2-2/2" ) == 1 );
 	assert( calc::inputParser( "2*2/2*2" ) == 4 );
 	assert( calc::inputParser( "2+2-2+2" ) == 4 );
+	assert( calc::inputParser( "2*(2*2)" ) == 8 );
 	assert( calc::inputParser( "sqrt(4)" ) == 2 );
 	assert( !calc::inputParser( "pi(4)" ) );
 	assert( !calc::inputParser( "sqrt()" ) );
