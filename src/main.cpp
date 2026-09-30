@@ -25,7 +25,7 @@ void welcome()
 	const Version calcVersion;
 	std::cout << calcVersion.name << ' '
 			<< calcVersion.number << " ("
-			<< calcVersion.versionName << ", "
+			<< calcVersion.versionType << ", "
 			<< calcVersion.date << ") [GCC "
 			<< calcVersion.gccVersion << "] on "
 			<< calcVersion.system << '\n'

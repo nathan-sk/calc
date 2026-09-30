@@ -20,6 +20,8 @@ Enter the `src/` directory
 
 `chmod u+x install.sh`
 
+`./install.sh`
+
 #### 2. or compile the project yourself
 
 compile the program by running the following command:
