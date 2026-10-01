@@ -59,12 +59,14 @@ std::optional<long double> calc::Operation::sortOperation()
 
 				//définition du calcul de gauche
 				setResult( std::string{ std::begin(calcul), std::begin(calcul) + i } );
-				setResultLeft(sortOperation());
+				std::optional<long double> resultLeft = sortOperation();
 
 				//définition du calcul de droite
 				setResult( std::string{ std::begin(calcul) + i + 1, std::end(calcul) } );
-				setResultRight(sortOperation());
-	
+				std::optional<long double> resultRight = sortOperation();
+
+				setResultRight( resultRight );
+				setResultLeft( resultLeft );
 				//vérifie si le résultat correspond à une erreure
 				if ( !getResultLeft() || !getResultRight() ) { return std::nullopt; }
 			
