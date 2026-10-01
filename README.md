@@ -8,7 +8,7 @@ A simple calculator program for the terminal, written in C++.
 
 ### 1. download the binaries :
 
-![Download releases](https://github.com/nathan-sk/calc/releases/)
+[Download releases](https://github.com/nathan-sk/calc/releases/)
 
 ### 2. or install it manually :
 

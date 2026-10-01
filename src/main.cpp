@@ -12,7 +12,7 @@
 struct Version
 {
 	std::string name{"Calc"};
-	std::string number{"1.0"};
+	std::string number{"1.1"};
 	std::string versionType{"stable"};
 	std::string date{"Sept 09 2026"};
 	std::string gccVersion{"14.2.0"};
