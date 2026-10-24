@@ -44,7 +44,7 @@ What works:
 * Modulo operator
 * operator priorities
 * Nested parentheses
-* functions : pi(), sqrt(), abs(), sin(), cos(), tan(), floor(), ceil(), and round()
+* functions : pi(), sqrt(), abs(), sin(), cos(), tan(), floor(), log(), ceil(), and round()
 * Exponents (powers)
 * Basic commands: `clear`, `exit` or `quit`, and `help`
 

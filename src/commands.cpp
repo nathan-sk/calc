@@ -19,7 +19,7 @@ Command doCommand( std::string_view input )
 		  << "- Modulo operator\n"
 		  << "- operator priorities\n"
 		  << "- Nested parentheses\n"
-		  << "- functions : pi(), sqrt(), abs(), sin(), cos(), tan(), floor(), ceil(), and round()\n"
+		  << "- functions : pi(), sqrt(), abs(), sin(), cos(), tan(), floor(), ceil(), log(), and round()\n"
 		  << "- Exponents (powers)\n";
 
         return command;
