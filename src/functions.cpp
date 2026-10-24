@@ -45,6 +45,11 @@ bool function::Function::find( const std::string& calcul, std::string::iterator 
 		setName("tan");
 		setResult( std::to_string( std::tan( *calc::inputParser(functionCalcul) ) ) );
 	}
+	else if ( std::string{parenthesesBegin - 3, parenthesesBegin} == "log" )
+	{
+		setName("log");
+		setResult( std::to_string( std::log( *calc::inputParser(functionCalcul) ) ) );
+	}
 	else if ( std::string{parenthesesBegin - 5, parenthesesBegin} == "floor" )
 	{
 		setName("floor");
